@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Collections.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="DateTime.cs" />
+    <Compile Include="Strings.cs" />
     <Compile Include="Regex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
