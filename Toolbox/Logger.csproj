@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>System</RootNamespace>
     <AssemblyName>Toolbox.Logger</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Loggers\ConsoleLogger.cs" />
+    <Compile Include="Loggers\FileLogger.cs" />
     <Compile Include="Loggers\ILogger.cs" />
     <Compile Include="Logger.Methods.cs" />
     <Compile Include="Logger.Levels.cs" />
