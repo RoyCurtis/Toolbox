@@ -8,12 +8,37 @@ namespace System
     /// </summary>
     public class ConsoleLogger : ILogger
     {
+        
         /// <summary>
         /// Fired when this console logger is paused; passes true or false for pause and
         /// unpause respectively
         /// </summary>
         public event Action<bool> Pause;
 
+        #region Level colors
+        /// <summary>
+        /// Gets or sets text color for fine-level logs; default is DarkGray
+        /// </summary>
+        public ConsoleColor FineColor = ConsoleColor.DarkGray;
+        /// <summary>
+        /// Gets or sets text color for debug-level logs; default is Gray
+        /// </summary>
+        public ConsoleColor DebugColor = ConsoleColor.Gray;
+        /// <summary>
+        /// Gets or sets text color for info-level logs; default is White
+        /// </summary>
+        public ConsoleColor InfoColor = ConsoleColor.White;
+        /// <summary>
+        /// Gets or sets text color for warn-level logs; default is Yellow
+        /// </summary>
+        public ConsoleColor WarnColor = ConsoleColor.Yellow;
+        /// <summary>
+        /// Gets or sets text color for severe-level logs; default is Red
+        /// </summary>
+        public ConsoleColor SevereColor = ConsoleColor.Red; 
+        #endregion
+
+        #region Public fields
         /// <summary>
         /// Sets whether to automatically print all log entries queued up whilst this
         /// logger is paused. If true, this logger will buffer entries in memory, else
@@ -54,19 +79,31 @@ namespace System
         /// <summary>
         /// Gets the number of log messages currently in the pause queue
         /// </summary>
-        public int Count { get { return buffer.Count; } }
+        public int Count { get { return buffer.Count; } } 
+        #endregion
 
+        #region Private
         Queue<QueuedLog> buffer = new Queue<QueuedLog>();
-        object lockkey = new object();
+        object lockkey = new object(); 
+        #endregion
 
-        #region Constructors
+        #region (De)constructors
         /// <summary>
         /// Sets up a new console logger, automatically attaching to the Log.Logged event
         /// </summary>
-        public ConsoleLogger() { Log.Logged += OnLog; }
-        ~ConsoleLogger() { Log.Logged -= OnLog; }
+        public ConsoleLogger() {
+            Log.Logged += OnLog;
+        }
+
+        /// <summary>
+        /// Automatic deregistration of logged event upon deconstruction
+        /// </summary>
+        ~ConsoleLogger() {
+            Log.Logged -= OnLog;
+        }
         #endregion
 
+        #region Log handler
         /// <summary>
         /// Prints log messages to console with appropriate color or queues messages
         /// to buffer if paused
@@ -92,19 +129,19 @@ namespace System
                 switch (l)
                 {
                     case LogLevels.Fine:
-                        coloredMessage(ConsoleColor.DarkGray, msg, args);
+                        coloredMessage(FineColor, msg, args);
                         return;
                     case LogLevels.Debug:
-                        coloredMessage(ConsoleColor.Gray, msg, args);
+                        coloredMessage(DebugColor, msg, args);
                         return;
                     case LogLevels.Info:
-                        coloredMessage(ConsoleColor.White, msg, args);
+                        coloredMessage(InfoColor, msg, args);
                         return;
                     case LogLevels.Warning:
-                        coloredMessage(ConsoleColor.Yellow, msg, args);
+                        coloredMessage(WarnColor, msg, args);
                         return;
                     case LogLevels.Severe:
-                        coloredMessage(ConsoleColor.Red, msg, args);
+                        coloredMessage(SevereColor, msg, args);
                         return;
                 }
             }
@@ -124,5 +161,6 @@ namespace System
             public string Message;
             public object[] Args;
         }
+        #endregion
     }
 }
