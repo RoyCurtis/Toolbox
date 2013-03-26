@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace System.Collections.Generic
+﻿namespace System.Collections.Generic
 {
     /// <summary>
     /// Provides useful extensions to various generic collection classes
@@ -37,17 +32,9 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Implementation of AddRange for SortedSets
+        /// Implementation of AddRange for ISets
         /// </summary>
-        public static void AddRange<T>(this SortedSet<T> list, IEnumerable<T> elements)
-        {
-            foreach (var item in elements) list.Add(item);
-        }
-
-        /// <summary>
-        /// Implementation of AddRange for HashSets
-        /// </summary>
-        public static void AddRange<T>(this HashSet<T> list, IEnumerable<T> elements)
+        public static void AddRange<T>(this ISet<T> list, IEnumerable<T> elements)
         {
             foreach (var item in elements) list.Add(item);
         }
