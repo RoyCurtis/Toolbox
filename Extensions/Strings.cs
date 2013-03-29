@@ -26,36 +26,17 @@ namespace System
         /// <summary>
         /// Case-insensitive string equality shortcut (current culture)
         /// </summary>
-        public static bool IEquals ( this string source, string value )
+        public static bool IEquals( this string source, string value )
         {
             return source.Equals( value, StringComparison.InvariantCultureIgnoreCase );
         }
-    }
 
-    /// <summary>
-    /// Helper array for cleaner-looking operation of string.Split()
-    /// </summary>
-    public static class Split
-    {
         /// <summary>
-        /// Helper array for string.Split for splitting by commas
+        /// Shortcut to string.Format, so that string literals can easily be formatted
         /// </summary>
-        public static char[] Comma   = new[] { ',' };
-        /// <summary>
-        /// Helper array for string.Split for splitting by dots
-        /// </summary>
-        public static char[] Dot     = new[] { '.' };
-        /// <summary>
-        /// Helper array for string.Split for splitting by forward slashes
-        /// </summary>
-        public static char[] FSlash  = new[] { '/' };
-        /// <summary>
-        /// Helper array for string.Split for splitting by backward slashes
-        /// </summary>
-        public static char[] BSlash  = new[] { '\\' };
-        /// <summary>
-        /// Helper array for string.Split for splitting by both slashes
-        /// </summary>
-        public static char[] Slashes = new[] { '/', '\\' };
+        public static string LFormat( this string source, params object[] parts )
+        {
+            return string.Format(source, parts);
+        }
     }
 }
