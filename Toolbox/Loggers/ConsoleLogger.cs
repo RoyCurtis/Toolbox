@@ -8,7 +8,6 @@ namespace System
     /// </summary>
     public class ConsoleLogger : ILogger
     {
-        
         /// <summary>
         /// Fired when this console logger is paused; passes true or false for pause and
         /// unpause respectively
@@ -46,6 +45,32 @@ namespace System
         /// </summary>
         public bool AutoPrintBacklog;
 
+        /// <summary>
+        /// If more than zero, will pad the tag names of log entries with spaces for
+        /// readability
+        /// </summary>
+        public int TagPadding = 0;
+
+        /// <summary>
+        /// Gets or sets the format of each log entry's tag. Must at least include {0}
+        /// for the tag name. This will get padded with spaces depending on TagPadding
+        /// </summary>
+        /// <example>Default is "[{0}]"</example>
+        public string TagFormat = "[{0}]";
+
+        /// <summary>
+        /// Gets or sets the format of each log entry's message. Must at least include:
+        /// - {0} for the tag
+        /// - {1} for the message
+        /// </summary>
+        /// <example>Default is "{0} {1}"</example>
+        public string MessageFormat = "{0} {1}";
+
+        /// <summary>
+        /// If true, successive messages from the same tag are visually grouped
+        /// </summary>
+        public bool GroupSimilar = true;
+
         bool paused;
         /// <summary>
         /// Sets pause state; if paused and AutoPrintBacklog is true, logged messages
@@ -57,21 +82,26 @@ namespace System
             get { return paused; }
             set
             {
-                lock (lockkey)
+                lock (mutex)
                 {
                     paused = value;
-                    Pause(value);
-                    if (value || !AutoPrintBacklog) return;
 
-                    var origCount = buffer.Count;
-                    while (buffer.Count != 0)
+                    // Auto-print backlog on unpause, else clear backbuffer (just in case)
+                    if (!value)
                     {
-                        var queued = buffer.Dequeue();
-                        OnLog(queued.Level, queued.Tag, queued.Message, queued.Args);
+                        if (AutoPrintBacklog)
+                            printBacklog();
+                        else
+                            buffer.Clear();
                     }
 
-                    if (origCount > 0)
-                        Console.WriteLine("*** End backlog ***");
+                    // Clear lastTag if grouping similar, so that the tag re-appears on
+                    // backlog to prevent confusion
+                    if (value && GroupSimilar)
+                        lastTag = null;
+
+                    if (Pause != null)
+                        Pause(value);
                 }
             }
         }
@@ -83,8 +113,31 @@ namespace System
         #endregion
 
         #region Private
-        Queue<QueuedLog> buffer = new Queue<QueuedLog>();
-        object lockkey = new object(); 
+        Queue<QueuedLog> buffer  = new Queue<QueuedLog>();
+        object           mutex   = new object();
+        string           lastTag = "";
+
+        /// <summary>
+        /// Goes through the backlog buffer and logs every entry, clearing the buffer
+        /// as it does
+        /// </summary>
+        void printBacklog()
+        {
+            var origCount = buffer.Count;
+
+            if (origCount == 0)
+                return;
+
+            coloredMessage(ConsoleColor.Cyan, "### Printing logger backlog ###");
+
+            while (buffer.Count > 0)
+            {
+                var queued = buffer.Dequeue();
+                OnLog(queued.Level, queued.Tag, queued.Message, queued.Args);
+            }
+
+            coloredMessage(ConsoleColor.Cyan, "### End of logger backlog ###");
+        }
         #endregion
 
         #region (De)constructors
@@ -110,38 +163,56 @@ namespace System
         /// </summary>
         public void OnLog(LogLevels l, string tag, string msg, object[] args)
         {
-            lock (lockkey)
+            lock (mutex)
             {
                 if (paused)
                 {
                     buffer.Enqueue(new QueuedLog
                     {
-                        Level = l,
-                        Tag = tag,
+                        Level   = l,
+                        Tag     = tag,
                         Message = msg,
-                        Args = args
+                        Args    = args
                     });
 
                     return;
                 }
 
-                msg = "[" + tag + "] " + msg;
+                string finalTag = "";
+                string finalMsg = "";
+
+                // Blank tags if grouping similar
+                if (GroupSimilar && tag == lastTag)
+                {
+                    var padLength = Math.Max(TagPadding, lastTag.Length);
+                        finalTag  = "".PadRight(padLength);
+                }
+                else
+                    finalTag = TagFormat.LFormat(tag).PadRight(TagPadding);
+
+                // Divide groups of tags with newlines
+                if (GroupSimilar && tag != lastTag)
+                    finalMsg = '\n' + MessageFormat.LFormat(finalTag, msg);
+                else
+                    finalMsg = MessageFormat.LFormat(finalTag, msg);
+
+                lastTag      = tag;
                 switch (l)
                 {
                     case LogLevels.Fine:
-                        coloredMessage(FineColor, msg, args);
+                        coloredMessage(FineColor,   finalMsg, args);
                         return;
                     case LogLevels.Debug:
-                        coloredMessage(DebugColor, msg, args);
+                        coloredMessage(DebugColor,  finalMsg, args);
                         return;
                     case LogLevels.Info:
-                        coloredMessage(InfoColor, msg, args);
+                        coloredMessage(InfoColor,   finalMsg, args);
                         return;
                     case LogLevels.Warning:
-                        coloredMessage(WarnColor, msg, args);
+                        coloredMessage(WarnColor,   finalMsg, args);
                         return;
                     case LogLevels.Severe:
-                        coloredMessage(SevereColor, msg, args);
+                        coloredMessage(SevereColor, finalMsg, args);
                         return;
                 }
             }
@@ -157,9 +228,9 @@ namespace System
         struct QueuedLog
         {
             public LogLevels Level;
-            public string Tag;
-            public string Message;
-            public object[] Args;
+            public string    Tag;
+            public string    Message;
+            public object[]  Args;
         }
         #endregion
     }

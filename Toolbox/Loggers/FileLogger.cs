@@ -35,7 +35,7 @@ namespace System.Loggers
             get { return paused; }
             set
             {
-                lock (lockkey)
+                lock (mutex)
                 {
                     if (value)
                     {
@@ -55,7 +55,7 @@ namespace System.Loggers
 
         #region Private
         StreamWriter stream;
-        object lockkey = new object(); 
+        object mutex = new object(); 
         #endregion
 
         #region (De)constructors
@@ -65,7 +65,7 @@ namespace System.Loggers
         /// </summary>
         public FileLogger(string path)
         {
-            File = Path.GetFullPath(path);
+            File        = Path.GetFullPath(path);
             Log.Logged += OnLog;
         }
 
@@ -74,7 +74,7 @@ namespace System.Loggers
         /// </summary>
         ~FileLogger()
         {   
-            Paused = true;
+            Paused      = true;
             Log.Logged -= OnLog;
         } 
         #endregion
@@ -85,7 +85,7 @@ namespace System.Loggers
         /// </summary>
         public void OnLog(LogLevels level, string tag, string message, object[] args)
         {
-            lock (lockkey)
+            lock (mutex)
             {
                 if (paused) return;
 
