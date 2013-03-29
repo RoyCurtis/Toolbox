@@ -35,15 +35,13 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Math.cs" />
     <Compile Include="DateTime.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="Regex.cs" />
