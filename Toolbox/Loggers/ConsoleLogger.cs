@@ -71,7 +71,7 @@ namespace System
         /// </summary>
         public bool GroupSimilar = true;
 
-        bool paused;
+               bool paused;
         /// <summary>
         /// Sets pause state; if paused and AutoPrintBacklog is true, logged messages
         /// get added to a backlog and then if unpaused, it will print the backlog to

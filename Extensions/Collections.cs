@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides useful extensions to various generic collection classes
     /// </summary>
-    public static class TBXCollections
+    public static class TCollections
     {
         /// <summary>
         /// Safer getter for dictionary that returns null on non-existant key for

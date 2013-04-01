@@ -5,7 +5,7 @@ namespace System
     /// <summary>
     /// Provides useful extensions to strings
     /// </summary>
-    public static class TBXString
+    public static class TString
     {
         /// <summary>
         /// Shortcut to string.Split(char[]) that removes empty entries by default

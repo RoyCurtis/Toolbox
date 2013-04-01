@@ -5,7 +5,7 @@ namespace System.Text.RegularExpressions
     /// <summary>
     /// Provides useful extensions to the Regex class
     /// </summary>
-    public static class TBXRegex
+    public static class TRegex
     {
         /// <summary>
         /// Converts all groups of a match to simple string array
@@ -26,6 +26,8 @@ namespace System.Text.RegularExpressions
         /// <summary>
         /// Shortcut to using Regex.Match in if conditionals
         /// </summary>
+        /// <param name="regex">Regex object to match</param>
+        /// <param name="input">String to try find matches in</param>
         /// <param name="matches">Outputs a list of matches, null if unsuccessful</param>
         /// <returns>True on success, false otherwise</returns>
         public static bool TryMatch(this Regex regex, string input, out string[] matches)
@@ -42,6 +44,8 @@ namespace System.Text.RegularExpressions
         /// Shortcut of Regex.TryMatch extension, which creates a regex that assumes
         /// IgnoreCase
         /// </summary>
+        /// <param name="input">String to try find matches in</param>
+        /// <param name="pattern">Regex pattern to match</param>
         /// <param name="matches">Outputs a list of matches, null if successful</param>
         /// <returns>True on success, false otherwise</returns>
         public static bool TryMatch(string input, string pattern, out string[] matches)

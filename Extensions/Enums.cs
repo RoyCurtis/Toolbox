@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides useful extensions to enums
     /// </summary>
-    public static class TBXEnums
+    public static class TEnums
     {
         /// <summary>
         /// Cleaner syntax for Enum.Parse(type, string)

@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides useful extensions to numerical types
     /// </summary>
-    public static class TBXMath
+    public static class TMath
     {
         const string errorMinMoreThanMax = "Minimum value cannot be more than the maximum";
 

@@ -3,7 +3,7 @@
     /// <summary>
     /// Provides useful extensions to DateTime
     /// </summary>
-    public static class TBXDateTime
+    public static class TDateTime
     {
         /// <summary>
         /// Returns an integer amount of seconds difference between DateTime.Now and
