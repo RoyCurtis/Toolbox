@@ -19,7 +19,7 @@
         /// Gets or sets the current logging level, automatically logging the change in
         /// level to Info
         /// </summary>
-        public static LogLevels LogLevel
+        public static LogLevels Level
         {
             set
             {
@@ -37,7 +37,7 @@
 
         static bool log(LogLevels l, string tag, string message, object[] parts)
         {
-            if (Logged != null && (l & LogLevel) == l)
+            if (Logged != null && (l & Level) == l)
                 Logged(l, tag, message, parts);
 
             return true;

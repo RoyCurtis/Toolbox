@@ -6,6 +6,20 @@
     public static class TDateTime
     {
         /// <summary>
+        /// The UNIX epoch at Jan 1st 1970
+        /// </summary>
+        public static DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+        /// <summary>
+        /// Returns number of seconds since the unix epoch, typically known as a
+        /// "timestamp" value
+        /// </summary>
+        public static double UnixTicks
+        {
+            get { return (double) DateTime.Now.Subtract(UnixEpoch).TotalSeconds; }
+        }
+
+        /// <summary>
         /// Returns an integer amount of seconds difference between DateTime.Now and
         /// this DateTime value
         /// </summary>
