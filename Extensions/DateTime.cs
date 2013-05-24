@@ -23,9 +23,9 @@
         /// Returns an integer amount of seconds difference between DateTime.Now and
         /// this DateTime value
         /// </summary>
-        public static int SecondsToNow(this DateTime time)
+        public static long SecondsToNow(this DateTime time)
         {
-            return (int) DateTime.Now.Subtract(time).TotalSeconds;
+            return (long) DateTime.Now.Subtract(time).TotalSeconds;
         }
 
         /// <summary>
