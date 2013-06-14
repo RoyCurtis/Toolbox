@@ -36,7 +36,20 @@
         /// </summary>
         public static void AddRange<T>(this ISet<T> list, IEnumerable<T> elements)
         {
-            foreach (var item in elements) list.Add(item);
+            foreach (var item in elements)
+                list.Add(item);
+        }
+
+        /// <summary>
+        /// Case-insensitive check if a collection of strings contains a given string
+        /// </summary>
+        public static bool IContains(this IEnumerable<string> stringList, string needle)
+        {
+            foreach (var item in stringList)
+                if ( item.IEquals(needle) )
+                    return true;
+
+            return false;
         }
     }
 }
