@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Toolbox\Logger.csproj", "{6ADD6BE7-80F4-4574-8988-EB6303544D00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logging\Logger.csproj", "{6ADD6BE7-80F4-4574-8988-EB6303544D00}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{9D1B825F-0AD1-4358-8FF7-61485DC791D5}"
 EndProject
