@@ -12,7 +12,10 @@ namespace System.Text.RegularExpressions
         /// </summary>
         public static string[] ToArray(this Match match)
         {
-            return (from Group grp in match.Groups select grp.Value).ToArray();
+            var query = from   Group grp in match.Groups
+                        select grp.Value;
+
+            return query.ToArray();
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace System.Text.RegularExpressions
         public static bool TryMatch(this Regex regex, string input, out string[] matches)
         {
             var match = regex.Match(input);
-            matches = match.Success
+            matches   = match.Success
                 ? (from Group m in match.Groups select m.Value).ToArray()
                 : null;
 

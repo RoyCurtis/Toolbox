@@ -9,28 +9,12 @@
         static object mutex = new object();
 
         /// <summary>
-        /// Executes a block of code (a return-less and parameter-less Action delegate)
-        /// with newlines before and after the block
-        /// </summary>
-        public static void WriteBlock(Action action)
-        {
-            lock (mutex)
-            {
-                Console.WriteLine();
-                action();
-                Console.WriteLine();
-            }
-        }
-
-        /// <summary>
         /// Writes text to console with a pre- and post-fix newline
         /// </summary>
         public static void WriteBlock(string line, params object[] args)
         {
             lock (mutex)
-            {
                 Console.WriteLine("\n{0}\n", line.LFormat(args));
-            }
         }
 
         /// <summary>
@@ -40,9 +24,7 @@
         public static void WriteBlockColored(ConsoleColor color, string line, params object[] args)
         {
             lock (mutex)
-            {
                 WriteLineColored(color, "\n{0}\n", line.LFormat(args));
-            }
         }
 
          /// <summary>

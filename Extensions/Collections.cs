@@ -12,7 +12,7 @@
         public static TV GetOrNullR<T, TV>(this Dictionary<T, TV> dict, T key)
             where TV : class
         {
-            if (dict.ContainsKey(key))
+            if ( dict.ContainsKey(key) )
                 return dict[key];
             else
                 return null;
@@ -25,7 +25,7 @@
         public static TV GetOrNullV<T, TV>(this Dictionary<T, TV> dict, T key)
             where TV : struct
         {
-            if (dict.ContainsKey(key))
+            if ( dict.ContainsKey(key) )
                 return dict[key];
             else
                 return default(TV);
