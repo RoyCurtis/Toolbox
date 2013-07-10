@@ -16,7 +16,7 @@
         /// </summary>
         public static long UnixTimestamp
         {
-            get { return (long) DateTime.Now.Subtract(UnixEpoch).TotalSeconds; }
+            get { return UnixEpoch.SecondsToNow(); }
         }
 
         /// <summary>

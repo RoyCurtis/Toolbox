@@ -35,7 +35,7 @@ namespace System
         /// <summary>
         /// List of loggers attached to the system; log messages get emitted to each one
         /// </summary>
-        public static List<ILogger> Loggers;
+        public static List<ILogger> Loggers = new List<ILogger>();
 
         #region Quick setup
         /// <summary>
@@ -120,7 +120,7 @@ namespace System
         public static void LogFullStackTrace(this Exception e)
         {
             var ex = e;
-            while ( true )
+            while (true)
             {
                 Log.Severe("Exception", ex.Message + ex.StackTrace);
                 if ( ex.InnerException != null )
@@ -128,7 +128,8 @@ namespace System
                     ex = ex.InnerException;
                     continue;
                 }
-                else break;
+                else
+                    break;
             }
         } 
         #endregion
@@ -136,13 +137,13 @@ namespace System
         #region Private methods
         static void emit(LogLevels target, string tag, string message, object[] parts)
         {
-            if ( ( target & Level ) != target )
+            if ( (target & Level) != target )
                 return;
 
-            if ( Logged != null )
+            if (Logged != null)
                 Logged(target, tag, message, parts);
 
-            foreach ( var logger in Loggers )
+            foreach (var logger in Loggers)
                 logger.Emit(target, tag, message, parts);
         } 
         #endregion
