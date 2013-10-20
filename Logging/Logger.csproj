@@ -37,11 +37,12 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="Loggers\ConsoleLogger.cs" />
     <Compile Include="Loggers\FileLogger.cs" />
     <Compile Include="Loggers\ILogger.cs" />
-    <Compile Include="Logger.Methods.cs" />
-    <Compile Include="Logger.Levels.cs" />
+    <Compile Include="LogChannel.cs" />
+    <Compile Include="Levels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

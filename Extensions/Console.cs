@@ -9,7 +9,7 @@
         static object mutex = new object();
 
         /// <summary>
-        /// Writes text to console with a pre- and post-fix newline
+        /// Writes text to console with a pre- and post-fix newline. Thread-safe.
         /// </summary>
         public static void WriteBlock(string line, params object[] args)
         {
@@ -19,7 +19,7 @@
 
         /// <summary>
         /// Writes colored text to console with a pre- and post-fix newline, resetting
-        /// the foreground color to the previous value
+        /// the foreground color to the previous value. Thread-safe.
         /// </summary>
         public static void WriteBlockColored(ConsoleColor color, string line, params object[] args)
         {
@@ -29,7 +29,7 @@
 
          /// <summary>
         /// Writes colored text to the console, resetting the foreground color to the
-        /// previous value
+        /// previous value. Thread-safe.
         /// </summary>
         public static void WriteColored(ConsoleColor color, string message, params object[] args)
         {
@@ -44,7 +44,7 @@
 
         /// <summary>
         /// Writes colored text lines to the console, resetting the foreground color to
-        /// the previous value
+        /// the previous value. Thread-safe.
         /// </summary>
         public static void WriteLineColored(ConsoleColor color, string message, params object[] args)
         {
@@ -59,7 +59,7 @@
 
         /// <summary>
         /// Writes highlighted text to the console, resetting the background color to the
-        /// previous value
+        /// previous value. Thread-safe.
         /// </summary>
         public static void WriteHighlighted(ConsoleColor bgcolor, string message, params object[] args)
         {
@@ -74,7 +74,7 @@
 
         /// <summary>
         /// Writes highlighted text lines to the console, resetting the background color
-        /// to the previous value
+        /// to the previous value. Thread-safe.
         /// </summary>
         public static void WriteLineHighlighted(ConsoleColor bgcolor, string message, params object[] args)
         {
@@ -89,7 +89,7 @@
 
         /// <summary>
         /// Writes both highlighted and colored text to the console, resetting both values
-        /// to the previous
+        /// to the previous. Thread-safe.
         /// </summary>
         public static void WriteColored(ConsoleColor bgcolor, ConsoleColor textcolor, string message, params object[] args)
         {
@@ -107,7 +107,7 @@
 
         /// <summary>
         /// Writes both highlighted and colored text lines to the console, resetting both
-        /// values to the previous
+        /// values to the previous. Thread-safe.
         /// </summary>
         public static void WriteLineColored(ConsoleColor bgcolor, ConsoleColor textcolor, string message, params object[] args)
         {

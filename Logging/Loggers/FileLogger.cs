@@ -84,7 +84,7 @@ namespace System.Loggers
         /// <summary>
         /// Appends log messages to file with timestamp, level and message
         /// </summary>
-        public void Emit(LogLevels level, string tag, string message, object[] args)
+        public void Emit(LogChannel source, LogLevels level, string tag, string message, object[] args)
         {
             lock (mutex)
             {

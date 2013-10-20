@@ -3,50 +3,55 @@
 namespace System
 {
     /// <summary>
-    /// Delegate for the Logged event, which provides the tag, message and format
-    /// parts (if any)
+    /// Represents a channel in which log messages can be emitted from and loggers
+    /// may be attached to
     /// </summary>
-    public delegate void LoggedArgs(LogLevels l, string tag, string message, object[] parts);
-
-    /// <summary>
-    /// Global static class for the logging system, which exposes methods to log messages
-    /// of varying levels and tags  
-    /// </summary>
-    public static class Log
+    public class LogChannel
     {
-        const string tag = "Logger";
+        List<ILogger> loggers = new List<ILogger>();
 
-        static LogLevels level = LogLevels.Production;
+        object    mutex = new object();
+        LogLevels level = LogLevels.Production;
         /// <summary>
-        /// Gets or sets the current logging level. Set to "Production" by default
+        /// Gets or sets this channel's current logging level. Set to "Production" by
+        /// default.
         /// </summary>
-        public static LogLevels Level
+        public LogLevels Level
         {
             set { level = value; }
-            get { return level; }
+            get { return level;  }
         }
 
         /// <summary>
-        /// Fires when a log is made but only if the current logging level allows for it.
-        /// Useful for external code to hook into logging events
+        /// Fires when a log is emitted through this channel but only if the channel's
+        /// logging level allows for it
         /// </summary>
-        public static event LoggedArgs Logged;
+        public event LoggedArgs Logged;
 
+        #region Logger methods
         /// <summary>
-        /// List of loggers attached to the system; log messages get emitted to each one
+        /// Attaches a logger to this channel
         /// </summary>
-        public static List<ILogger> Loggers = new List<ILogger>();
-
-        #region Quick setup
-        /// <summary>
-        /// Quickly sets up and attaches a console logger and automatically sets the level
-        /// to "All"
-        /// </summary>
-        /// <param name="level">Set a custom log level</param>
-        public static void QuickSetup(LogLevels level = LogLevels.All)
+        public void Attach(ILogger logger)
         {
-            Level = level;
-            Loggers.Add( new ConsoleLogger() );
+            if ( !loggers.Contains(logger) )
+                loggers.Add(logger);
+        }
+
+        /// <summary>
+        /// Detaches a logger from this channel
+        /// </summary>
+        public void Detach(ILogger logger)
+        {
+            loggers.Remove(logger);
+        }
+
+        /// <summary>
+        /// Detaches all loggers from this channel
+        /// </summary>
+        public void DetachAll()
+        {
+            loggers.Clear();
         }
         #endregion
 
@@ -58,7 +63,7 @@ namespace System
         /// <param name="tag">Name of class or section this log is from</param>
         /// <param name="message">Log message in formattable form</param>
         /// <param name="parts">Data for any formatting parameters in the message</param>
-        public static void Fine(string tag, string message, params object[] parts)
+        public void Fine(string tag, string message, params object[] parts)
         { emit(LogLevels.Fine, tag, message, parts); }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace System
         /// <param name="tag">Name of class or section this log is from</param>
         /// <param name="message">Log message in formattable form</param>
         /// <param name="parts">Data for any formatting parameters in the message</param>
-        public static void Debug(string tag, string message, params object[] parts)
+        public void Debug(string tag, string message, params object[] parts)
         { emit(LogLevels.Debug, tag, message, parts); }
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace System
         /// <param name="tag">Name of class or section this log is from</param>
         /// <param name="message">Log message in formattable form</param>
         /// <param name="parts">Data for any formatting parameters in the message</param>
-        public static void Info(string tag, string message, params object[] parts)
+        public void Info(string tag, string message, params object[] parts)
         { emit(LogLevels.Info, tag, message, parts); }
 
         /// <summary>
@@ -89,7 +94,7 @@ namespace System
         /// <param name="tag">Name of class or section this log is from</param>
         /// <param name="message">Log message in formattable form</param>
         /// <param name="parts">Data for any formatting parameters in the message</param>
-        public static void Warn(string tag, string message, params object[] parts)
+        public void Warn(string tag, string message, params object[] parts)
         { emit(LogLevels.Warning, tag, message, parts); }
 
         /// <summary>
@@ -99,30 +104,30 @@ namespace System
         /// <param name="tag">Name of class or section this log is from</param>
         /// <param name="message">Log message in formattable form</param>
         /// <param name="parts">Data for any formatting parameters in the message</param>
-        public static void Severe(string tag, string message, params object[] parts)
+        public void Severe(string tag, string message, params object[] parts)
         { emit(LogLevels.Severe, tag, message, parts); } 
         #endregion
 
         #region Stack trace methods
         /// <summary>
-        /// Extension method that outputs an exception's message and its stack trace
-        /// to the logger as Severe level
+        /// Outputs an exception's message and its stack trace through this channel
+        /// as Severe level
         /// </summary>
-        public static void LogStackTrace(this Exception e)
+        public void LogStackTrace(Exception e)
         {
-            Log.Severe("Exception", e.Message + e.StackTrace);
+            Severe("Exception", e.Message + e.StackTrace);
         }
 
         /// <summary>
-        /// Extension method that recurses through inner exceptions, log all stack
-        /// traces
+        /// Recursively outputs an exception's message and its stack trace, along with
+        /// that of inner exceptions, through this channel as Severe level
         /// </summary>
-        public static void LogFullStackTrace(this Exception e)
+        public void LogFullStackTrace(Exception e)
         {
             var ex = e;
             while (true)
             {
-                Log.Severe("Exception", ex.Message + ex.StackTrace);
+                Severe("Exception", ex.Message + ex.StackTrace);
                 if ( ex.InnerException != null )
                 {
                     ex = ex.InnerException;
@@ -135,7 +140,7 @@ namespace System
         #endregion
 
         #region Private methods
-        static void emit(LogLevels target, string tag, string message, object[] parts)
+        internal void emit(LogLevels target, string tag, string message, object[] parts)
         {
             if ( (target & Level) != target )
                 return;
@@ -143,8 +148,8 @@ namespace System
             if (Logged != null)
                 Logged(target, tag, message, parts);
 
-            foreach (var logger in Loggers)
-                logger.Emit(target, tag, message, parts);
+            foreach (var logger in loggers)
+                logger.Emit(this, target, tag, message, parts);
         } 
         #endregion
     }

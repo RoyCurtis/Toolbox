@@ -18,9 +18,9 @@
         bool Paused { get; set; }
 
         /// <summary>
-        /// Called by Log when a log message is emitted that is allowed by its currently
-        /// set Level
+        /// Called by a <see cref="LogChannel"/> when a log message is emitted that is
+        /// allowed by its currently set <see cref="LogLevel"/>
         /// </summary>
-        void Emit(LogLevels level, string tag, string message, object[] args);
+        void Emit(LogChannel source, LogLevels level, string tag, string message, object[] args);
     }
 }
