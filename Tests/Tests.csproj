@@ -50,11 +50,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Extensions\CollectionTests.cs" />
-    <Compile Include="Extensions\RegexTests.cs" />
-    <Compile Include="Extensions\MathTests.cs" />
-    <Compile Include="Extensions\EnumTests.cs" />
-    <Compile Include="Extensions\StringTests.cs" />
+    <Compile Include="Extensions\TCollection.cs" />
+    <Compile Include="Extensions\TRegex.cs" />
+    <Compile Include="Extensions\TMath.cs" />
+    <Compile Include="Extensions\TEnums.cs" />
+    <Compile Include="Extensions\TString.cs" />
+    <Compile Include="Logger\ILoggerTests.cs" />
+    <Compile Include="Logger\GlobalLoggerTests.cs" />
+    <Compile Include="Logger\TestLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,9 +70,7 @@
       <Name>Logger</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logger\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

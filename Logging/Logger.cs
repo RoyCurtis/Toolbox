@@ -27,6 +27,7 @@
         }
 
         #region Quick setup
+        static bool quickSetup;
         /// <summary>
         /// Quickly sets up and attaches a <see cref="ConsoleLogger"/> and automatically
         /// sets the level to <see cref="LogLevels.All"/>
@@ -34,7 +35,11 @@
         /// <param name="level">Set a custom log level</param>
         public static void QuickSetup(LogLevels level = LogLevels.All)
         {
-            Level = level;
+            if (quickSetup)
+                throw new InvalidOperationException("Quick logger setup has already been done once");
+
+            quickSetup = true;
+            Level      = level;
             Attach( new ConsoleLogger() );
         }
         #endregion
