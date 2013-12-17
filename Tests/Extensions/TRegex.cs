@@ -17,6 +17,43 @@ namespace Tests
         }
 
         [TestMethod]
+        public void Match()
+        {
+            var test   = "ReGeX reGgaE";
+            var actual = TRegex.Match(test, "regex");
+
+            Assert.AreEqual(actual.Value, "ReGeX");
+        }
+
+        [TestMethod]
+        public void Replace_String()
+        {
+            var test     = "It's a question of LUst, it's a question of TRust";
+            var expected = "It's a question of love, it's a question of love";
+            var actual   = TRegex.Replace(test, "(l|tr)ust", "love");
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Replace_Eval()
+        {
+            var test     = "It's a question of LUst, it's a question of TRust";
+            var expected = "It's a question of trust, it's a question of lust";
+            var actual   = TRegex.Replace(test, "(l|tr)ust", m => {
+                if (m.Value == "LUst")
+                    return "trust";
+                else if (m.Value == "TRust")
+                    return "lust";
+                else
+                    return "???";
+            });
+
+            Assert.AreEqual(expected, actual);
+            StringAssert.DoesNotMatch(actual, new Regex(@"\?\?\?"));
+        }
+
+        [TestMethod]
         public void IsMatch()
         {
             var test   = "ReGeX reGgaE";

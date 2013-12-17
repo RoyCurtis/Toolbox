@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Collections.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="Random.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Math.cs" />
     <Compile Include="DateTime.cs" />

@@ -19,7 +19,35 @@ namespace System.Text.RegularExpressions
         }
 
         /// <summary>
-        /// Shortcut to Regex.IsMatch() with auto case-insensitivity
+        /// Shortcut to <see cref="Regex.Match(string, string)"/> with auto
+        /// case-insensitivity
+        /// </summary>
+        public static Match Match(string input, string pattern)
+        {
+            return Regex.Match(input, pattern, RegexOptions.IgnoreCase);
+        }
+
+        /// <summary>
+        /// Shortcut to <see cref="Regex.Replace(string, string, string)"/> with auto
+        /// case-insensitivity
+        /// </summary>
+        public static string Replace(string input, string pattern, string replacement)
+        {
+            return Regex.Replace(input, pattern, replacement, RegexOptions.IgnoreCase);
+        }
+
+        /// <summary>
+        /// Shortcut to <see cref="Regex.Replace(string, string, MatchEvaluator)"/> with
+        /// auto case-insensitivity
+        /// </summary>
+        public static string Replace(string input, string pattern, MatchEvaluator eval)
+        {
+            return Regex.Replace(input, pattern, eval, RegexOptions.IgnoreCase);
+        }
+
+        /// <summary>
+        /// Shortcut to <see cref="Regex.IsMatch(string, string)"/> with auto
+        /// case-insensitivity
         /// </summary>
         public static bool IsMatch(string input, string pattern)
         {
@@ -36,7 +64,8 @@ namespace System.Text.RegularExpressions
         public static bool TryMatch(this Regex regex, string input, out string[] matches)
         {
             var match = regex.Match(input);
-            matches   = match.Success
+
+            matches = match.Success
                 ? (from Group m in match.Groups select m.Value).ToArray()
                 : null;
 

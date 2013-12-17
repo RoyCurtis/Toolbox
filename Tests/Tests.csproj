@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\TRandom.cs" />
     <Compile Include="Extensions\TCollection.cs" />
     <Compile Include="Extensions\TRegex.cs" />
     <Compile Include="Extensions\TMath.cs" />
