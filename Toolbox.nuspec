@@ -2,17 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Toolbox</id>
-        <version>0.2.1</version>
+        <version>0.2.2</version>
         <title>Toolbox</title>
         <authors>Roy Curtis</authors>
         <projectUrl>https://github.com/RoyCurtis/Toolbox</projectUrl>
+        <iconUrl>https://raw.githubusercontent.com/RoyCurtis/Toolbox/master/Resources/Logo.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A collection of classes that extend the .NET framework with extra functionality and a logging toolkit</description>
-        <releaseNotes>0.2.1 - Added TRandom for global random numbers, added functionality to TRegex
-
-0.2.0 - Added "channels" to Logging; Log now uses a global channel. Removed some ConsoleLogger functionality
-
-0.1.1 - Fixed nuget package</releaseNotes>
+        <releaseNotes>0.2.1/0.2.2 - Added TRandom for global random numbers, added functionality to TRegex</releaseNotes>
+        <copyright />
     </metadata>
     <files>
         <file src="Build\Toolbox.Extensions.dll" target="lib\net40\Toolbox.Extensions.dll" />
