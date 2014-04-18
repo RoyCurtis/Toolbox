@@ -7,40 +7,78 @@ namespace Tests
     public class TMathTests
     {
         [TestMethod]
-        public void Clamp_Max()
+        public void Clamp_intShrink()
         {
-            var value    = 512;
-            var expected = 256;
-            var actual   = value.Clamp(128, 256);
+            int value    = 512;
+            int expected = 256;
+            int actual   = value.Clamp(128, 256);
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void Clamp_Min()
+        public void Clamp_intGrow()
         {
-            var value    = 0;
-            var expected = 128;
-            var actual   = value.Clamp(128, 256);
+            int value    = 64;
+            int expected = 128;
+            int actual   = value.Clamp(128, 256);
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void Clamp_Same()
+        public void Clamp_shortShrink()
         {
-            var value    = 200;
-            var expected = 200;
-            var actual   = value.Clamp(128, 256);
+            short value    = 512;
+            short expected = 256;
+            short actual   = value.Clamp(128, 256);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Clamp_shortGrow()
+        {
+            short value    = 64;
+            short expected = 128;
+            short actual   = value.Clamp(128, 256);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Clamp_intSame()
+        {
+            int value    = 200;
+            int expected = 200;
+            int actual   = value.Clamp(128, 256);
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void Clamp_shortSame()
+        {
+            short value    = 200;
+            short expected = 200;
+            short actual   = value.Clamp(128, 256);
 
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
         [ExpectedException( typeof(ArgumentException) )]
-        public void Clamp_Error()
+        public void Clamp_intError()
         {
-            var value = 128;
+            int value = 128;
+            value.Clamp(256, 128);
+        }
+
+        [TestMethod]
+        [ExpectedException( typeof(ArgumentException) )]
+        public void Clamp_shortError()
+        {
+            short value = 128;
             value.Clamp(256, 128);
         }
     }

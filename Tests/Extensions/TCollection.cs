@@ -58,6 +58,7 @@ namespace Tests
             Assert.IsTrue( test.IContains("am") );
             Assert.IsTrue( test.IContains("A") );
             Assert.IsTrue( test.IContains("SeT") );
+            Assert.IsFalse( test.IContains("HoTeP") );
         }
     }
 }

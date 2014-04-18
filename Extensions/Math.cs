@@ -10,7 +10,7 @@
         /// <summary>
         /// Clamps a given integer between a minimum and maximum
         /// </summary>
-        public static int Clamp( this int value, int min, int max)
+        public static int Clamp(this int value, int min, int max)
         {
             if (min > max)
                 throw new ArgumentException(errorMinMoreThanMax);
@@ -26,7 +26,7 @@
         /// <summary>
         /// Clamps a given short between a minimum and maximum
         /// </summary>
-        public static short Clamp( this short value, short min, short max)
+        public static short Clamp(this short value, short min, short max)
         {
             if (min > max)
                 throw new ArgumentException(errorMinMoreThanMax);

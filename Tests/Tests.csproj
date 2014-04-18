@@ -50,6 +50,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\TConsole.cs" />
+    <Compile Include="Extensions\TDateTime.cs" />
     <Compile Include="Extensions\TRandom.cs" />
     <Compile Include="Extensions\TCollection.cs" />
     <Compile Include="Extensions\TRegex.cs" />

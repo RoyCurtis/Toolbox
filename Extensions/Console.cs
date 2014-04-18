@@ -9,7 +9,8 @@
         static object mutex = new object();
 
         /// <summary>
-        /// Writes text to console with a pre- and post-fix newline. Thread-safe.
+        /// Writes text to console with a pre- and post-fix newline. Thread-safe and
+        /// formattable.
         /// </summary>
         public static void WriteBlock(string line, params object[] args)
         {
@@ -19,7 +20,7 @@
 
         /// <summary>
         /// Writes colored text to console with a pre- and post-fix newline, resetting
-        /// the foreground color to the previous value. Thread-safe.
+        /// the foreground color to the previous value. Thread-safe and formattable.
         /// </summary>
         public static void WriteBlockColored(ConsoleColor color, string line, params object[] args)
         {
@@ -29,13 +30,14 @@
 
          /// <summary>
         /// Writes colored text to the console, resetting the foreground color to the
-        /// previous value. Thread-safe.
+        /// previous value. Thread-safe and formattable.
         /// </summary>
         public static void WriteColored(ConsoleColor color, string message, params object[] args)
         {
             lock (mutex)
             {
-                var prevColor           = Console.ForegroundColor;
+                var prevColor = Console.ForegroundColor;
+
                 Console.ForegroundColor = color;
                 Console.Write(message, args);
                 Console.ForegroundColor = prevColor;
@@ -44,13 +46,14 @@
 
         /// <summary>
         /// Writes colored text lines to the console, resetting the foreground color to
-        /// the previous value. Thread-safe.
+        /// the previous value. Thread-safe and formattable.
         /// </summary>
         public static void WriteLineColored(ConsoleColor color, string message, params object[] args)
         {
             lock (mutex)
             {
-                var prevColor           = Console.ForegroundColor;
+                var prevColor = Console.ForegroundColor;
+
                 Console.ForegroundColor = color;
                 Console.WriteLine(message, args);
                 Console.ForegroundColor = prevColor;
@@ -59,13 +62,14 @@
 
         /// <summary>
         /// Writes highlighted text to the console, resetting the background color to the
-        /// previous value. Thread-safe.
+        /// previous value. Thread-safe and formattable.
         /// </summary>
         public static void WriteHighlighted(ConsoleColor bgcolor, string message, params object[] args)
         {
             lock (mutex)
             {
-                var prevColor           = Console.BackgroundColor;
+                var prevColor = Console.BackgroundColor;
+
                 Console.BackgroundColor = bgcolor;
                 Console.Write(message, args);
                 Console.BackgroundColor = prevColor;
@@ -74,13 +78,14 @@
 
         /// <summary>
         /// Writes highlighted text lines to the console, resetting the background color
-        /// to the previous value. Thread-safe.
+        /// to the previous value. Thread-safe and formattable.
         /// </summary>
         public static void WriteLineHighlighted(ConsoleColor bgcolor, string message, params object[] args)
         {
             lock (mutex)
             {
-                var prevColor           = Console.BackgroundColor;
+                var prevColor = Console.BackgroundColor;
+
                 Console.BackgroundColor = bgcolor;
                 Console.WriteLine(message, args);
                 Console.BackgroundColor = prevColor;
@@ -89,14 +94,15 @@
 
         /// <summary>
         /// Writes both highlighted and colored text to the console, resetting both values
-        /// to the previous. Thread-safe.
+        /// to the previous. Thread-safe and formattable.
         /// </summary>
         public static void WriteColored(ConsoleColor bgcolor, ConsoleColor textcolor, string message, params object[] args)
         {
             lock (mutex)
             {
-                var prevBGColor         = Console.BackgroundColor;
-                var prevFGColor         = Console.ForegroundColor;
+                var prevBGColor = Console.BackgroundColor;
+                var prevFGColor = Console.ForegroundColor;
+
                 Console.BackgroundColor = bgcolor;
                 Console.ForegroundColor = textcolor;
                 Console.Write(message, args);
@@ -107,14 +113,15 @@
 
         /// <summary>
         /// Writes both highlighted and colored text lines to the console, resetting both
-        /// values to the previous. Thread-safe.
+        /// values to the previous. Thread-safe and formattable.
         /// </summary>
         public static void WriteLineColored(ConsoleColor bgcolor, ConsoleColor textcolor, string message, params object[] args)
         {
             lock (mutex)
             {
-                var prevBGColor         = Console.BackgroundColor;
-                var prevFGColor         = Console.ForegroundColor;
+                var prevBGColor = Console.BackgroundColor;
+                var prevFGColor = Console.ForegroundColor;
+
                 Console.BackgroundColor = bgcolor;
                 Console.ForegroundColor = textcolor;
                 Console.WriteLine(message, args);
